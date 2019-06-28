@@ -1,4 +1,4 @@
-package com.stepyen.xpayDemo;
+package com.stepyen.xpaydemo;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

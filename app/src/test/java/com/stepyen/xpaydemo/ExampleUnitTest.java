@@ -1,4 +1,4 @@
-package com.stepyen.xpayDemo;
+package com.stepyen.xpaydemo;
 
 import org.junit.Test;
 
