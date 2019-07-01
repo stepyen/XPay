@@ -25,7 +25,7 @@ public class UPPay {
     private static UPPay mUPPay;
     private Activity mContext;
     private String mMode;
-    private XPay.JPayListener mJPayListener;
+    private XPay.XPayListener mXPayListener;
 
 
     //支付失败
@@ -54,8 +54,8 @@ public class UPPay {
         boolean onResult(String msg, String sign64, String mode);
     }
 
-    public void startUPPay(String mode, String tn, XPay.JPayListener listener) {
-        this.mJPayListener = listener;
+    public void startUPPay(String mode, String tn, XPay.XPayListener listener) {
+        this.mXPayListener = listener;
         this.mMode = mode;
         doStartUnionPayPlugin(mContext, tn, mode);
     }
@@ -78,13 +78,13 @@ public class UPPay {
      */
     public void onUUPayResult(Intent data) throws JSONException {
         if (data == null) {
-            mJPayListener.onPayError(PAY_CALLBACK_ERROR, "callbake error,data is null");
+            mXPayListener.onPayError(PAY_CALLBACK_ERROR, "callbake error,data is null");
             return;
         }
         //支付控件返回字符串:success、fail、cancel 分别代表支付成功，支付失败，支付取消
         String str = data.getExtras().getString("pay_result");
         if (str.isEmpty()) {
-            mJPayListener.onPayError(PAY_CALLBACK_ERROR, "pay_result is null");
+            mXPayListener.onPayError(PAY_CALLBACK_ERROR, "pay_result is null");
             return;
         }
         if (str.equalsIgnoreCase("success")) {
@@ -95,12 +95,12 @@ public class UPPay {
                 String sign = resultJson.getString("sign");
                 String dataOrg = resultJson.getString("data");
                 // 去商户后台做验签以及查询订单信息
-                mJPayListener.onUUPay(dataOrg, sign, mMode);
+                mXPayListener.onUUPay(dataOrg, sign, mMode);
             }
         } else if (str.equalsIgnoreCase("fail")) {
-            mJPayListener.onPayError(PAY_ERROR, "支付失败");
+            mXPayListener.onPayError(PAY_ERROR, "支付失败");
         } else if (str.equalsIgnoreCase("cancel")) {
-            mJPayListener.onPayCancel();
+            mXPayListener.onPayCancel();
         }
     }
 }

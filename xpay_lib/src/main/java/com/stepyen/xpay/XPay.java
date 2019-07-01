@@ -28,7 +28,7 @@ public class XPay {
         return mXPay;
     }
 
-    public interface JPayListener {
+    public interface XPayListener {
         //支付成功
         void onPaySuccess();
         //支付失败
@@ -43,7 +43,7 @@ public class XPay {
         WXPAY, ALIPAY, UUPAY
     }
 
-    public void toPay(PayMode payMode, String payParameters, JPayListener listener) {
+    public void toPay(PayMode payMode, String payParameters, XPayListener listener) {
         if (payMode.name().equalsIgnoreCase(PayMode.WXPAY.name())) {
             toWxPay(payParameters, listener);
         } else if (payMode.name().equalsIgnoreCase(PayMode.ALIPAY.name())) {
@@ -54,7 +54,7 @@ public class XPay {
     }
 
 
-    public void toWxPay(String payParameters, JPayListener listener) {
+    public void toWxPay(String payParameters, XPayListener listener) {
         if (payParameters != null) {
             JSONObject param = null;
             try {
@@ -87,7 +87,7 @@ public class XPay {
     }
 
     public void toWxPay(String appId, String partnerId, String prepayId,
-                        String nonceStr, String timeStamp, String sign, JPayListener listener) {
+                        String nonceStr, String timeStamp, String sign, XPayListener listener) {
         if (TextUtils.isEmpty(appId) || TextUtils.isEmpty(partnerId)
                 || TextUtils.isEmpty(prepayId) || TextUtils.isEmpty(nonceStr)
                 || TextUtils.isEmpty(timeStamp) || TextUtils.isEmpty(sign)) {
@@ -99,7 +99,7 @@ public class XPay {
         WeiXinPay.getInstance(mContext).startWXPay(appId, partnerId, prepayId, nonceStr, timeStamp, sign, listener);
     }
 
-    public void toAliPay(String payParameters, JPayListener listener) {
+    public void toAliPay(String payParameters, XPayListener listener) {
         if (payParameters != null) {
             if (listener != null) {
                 Alipay.getInstance(mContext).startAliPay(payParameters, listener);
@@ -111,7 +111,7 @@ public class XPay {
         }
     }
 
-    public void toUUPay(String payParameters, JPayListener listener) {
+    public void toUUPay(String payParameters, XPayListener listener) {
         if (payParameters != null) {
             JSONObject param = null;
             try {
@@ -138,7 +138,7 @@ public class XPay {
         }
     }
 
-    public void toUUPay(String mode, String tn, JPayListener listener) {
+    public void toUUPay(String mode, String tn, XPayListener listener) {
         if (listener == null) {
             listener.onPayError(UPPay.PAY_PARAMETERS_ERROE, "参数异常");
             return;

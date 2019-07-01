@@ -27,5 +27,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
 
+    // 引用失败，未解
+//    api 'com.github.stepyen:XPay:1.0.5'
+    implementation project(":xpay_lib")
 
 }

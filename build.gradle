@@ -12,7 +12,12 @@ buildscript {
 }
 
 allprojects {
-    addRepos(repositories)
+    repositories {
+        addRepos(repositories)
+        flatDir {
+            dirs 'libs'
+        }
+    }
 }
 
 task clean(type: Delete) {

@@ -26,7 +26,7 @@ public class WeiXinPay {
     private static WeiXinPay mWeiXinPay;
     private Context mContext;
     private IWXAPI mIWXAPI;
-    private XPay.JPayListener mJPayListener;
+    private XPay.XPayListener mXPayListener;
 
     //未安装微信或微信版本过低
     public static final int WEIXIN_VERSION_LOW = 0x001;
@@ -77,8 +77,8 @@ public class WeiXinPay {
      * @param sign
      */
     public void startWXPay(String appId, String partnerId, String prepayId,
-                           String nonceStr, String timeStamp, String sign, XPay.JPayListener listener){
-        mJPayListener = listener;
+                           String nonceStr, String timeStamp, String sign, XPay.XPayListener listener){
+        mXPayListener = listener;
         init(appId);
 
         if (!checkWx()) {
@@ -108,21 +108,21 @@ public class WeiXinPay {
      * @param message
      */
     public void onResp(int error_code,String message) {
-        if(mJPayListener == null) {
+        if(mXPayListener == null) {
             return;
         }
         if(error_code == 0) {
             //支付成功
-            mJPayListener.onPaySuccess();
+            mXPayListener.onPaySuccess();
         } else if(error_code == -1) {
             //支付异常
-            mJPayListener.onPayError(PAY_ERROR,message);
+            mXPayListener.onPayError(PAY_ERROR,message);
         } else if(error_code == -2) {
             //支付取消
-            mJPayListener.onPayCancel();
+            mXPayListener.onPayCancel();
         }
 
-        mJPayListener = null;
+        mXPayListener = null;
     }
 
 

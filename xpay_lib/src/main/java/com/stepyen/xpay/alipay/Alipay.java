@@ -20,7 +20,7 @@ import java.util.Map;
 public class Alipay {
     private static Alipay mAliPay;
     private Activity mContext;
-    private XPay.JPayListener mJPayListener;
+    private XPay.XPayListener mXPayListener;
 
     //支付失败
     public static final int PAY_ERROR = 0x001;
@@ -52,8 +52,8 @@ public class Alipay {
     }
 
 
-    public void startAliPay(final String orderInfo, XPay.JPayListener listener){
-        mJPayListener = listener;
+    public void startAliPay(final String orderInfo, XPay.XPayListener listener){
+        mXPayListener = listener;
         Runnable payRunnable = new Runnable() {
             @Override
             public void run() {
@@ -77,31 +77,31 @@ public class Alipay {
             Log.e("aliPay call ",payResult.toString());
 
             String resultStatus = payResult.getResultStatus();
-            if (mJPayListener ==null){
+            if (mXPayListener ==null){
                 return;
             }
             // https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.xN1NnL&treeId=204&articleId=105302&docType=1
             if(payResult == null) {
-                mJPayListener.onPayError(RESULT_ERROR,"结果解析错误");
+                mXPayListener.onPayError(RESULT_ERROR,"结果解析错误");
                 return;
             }
             if(TextUtils.equals(resultStatus, "9000")) {
                 //支付成功
-                mJPayListener.onPaySuccess();
+                mXPayListener.onPaySuccess();
             } else if(TextUtils.equals(resultStatus, "8000")) {
                 //正在处理中，支付结果未知（有可能已经支付成功），请查询商户订单列表中订单的支付状态
-                mJPayListener.onPayError(PAY_DEALING,"正在处理结果中");
+                mXPayListener.onPayError(PAY_DEALING,"正在处理结果中");
             } else if(TextUtils.equals(resultStatus, "6001")) {
                 //支付取消
-                mJPayListener.onPayCancel();
+                mXPayListener.onPayCancel();
             } else if(TextUtils.equals(resultStatus, "6002")) {
                 //网络连接出错
-                mJPayListener.onPayError(PAY_NETWORK_ERROR,"网络连接出错");
+                mXPayListener.onPayError(PAY_NETWORK_ERROR,"网络连接出错");
             } else if(TextUtils.equals(resultStatus, "4000")) {
                 //支付错误
-                mJPayListener.onPayError(PAY_ERROR,"订单支付失败");
+                mXPayListener.onPayError(PAY_ERROR,"订单支付失败");
             }else {
-                mJPayListener.onPayError(PAY_OTHER_ERROR,resultStatus);
+                mXPayListener.onPayError(PAY_OTHER_ERROR,resultStatus);
             }
         }
     };
