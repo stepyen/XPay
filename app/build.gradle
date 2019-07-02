@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
@@ -29,6 +29,6 @@ dependencies {
 
     // 引用失败，未解
 //    api 'com.github.stepyen:XPay:1.0.5'
-    implementation project(":xpay_lib")
+    api project(":xpay_lib")
 
 }
