@@ -14,7 +14,10 @@ allprojects {
     repositories {
         addRepos(repositories)
         flatDir {
-            dirs 'libs', '../xpay_lib/libs'
+            dirs 'libs'
+        }
+        flatDir {
+            dirs project(':alipay').file('libs')
         }
     }
 }

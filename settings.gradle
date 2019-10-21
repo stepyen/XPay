@@ -1,1 +1,1 @@
-include ':app', ':xpay_lib'
+include ':app', ':wechatpay', ':alipay'
