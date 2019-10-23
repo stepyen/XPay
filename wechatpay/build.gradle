@@ -19,7 +19,9 @@ android {
 }
 
 dependencies {
-
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     // 微信sdk
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.4'
 
